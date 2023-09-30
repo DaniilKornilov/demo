@@ -11,9 +11,12 @@ metadata:
     - Kotlin
     - Spring
   projectType: springboot
-  language: Java
+  language: Kotlin
   provider: Red Hat
   supportUrl: https://github.com/devfile-samples/devfile-support#support-information
+parent:
+  id: java-springboot
+  registryUrl: 'https://registry.devfile.io'
 components:
   - name: image
     image:
@@ -25,6 +28,10 @@ components:
   - name: demo
     kubernetes:
       uri: kube/demo.yaml
+      endpoints:
+        - name: http-8081
+          targetPort: 8081
+          path: /
   - name: mongo
     kubernetes:
       uri: kube/mongo.yaml
@@ -42,8 +49,8 @@ commands:
     composite:
       commands:
         - build-image
-        - deploy-mongo
         - deploy-demo
+        - deploy-mongo
       group:
         kind: deploy
         isDefault: true
