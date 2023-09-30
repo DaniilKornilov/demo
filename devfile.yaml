@@ -1,6 +1,19 @@
 schemaVersion: 2.2.0
 metadata:
   name: kotlin-mongo
+  version: 1.2.1
+  attributes:
+    alpha.dockerimage-port: 8081
+  displayName: Spring Boot®
+  description: Spring Boot® using Maven
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
+  tags:
+    - Kotlin
+    - Spring
+  projectType: springboot
+  language: Java
+  provider: Red Hat
+  supportUrl: https://github.com/devfile-samples/devfile-support#support-information
 components:
   - name: image
     image:
