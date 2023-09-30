@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: demo-app
+          image: daniilkornilov/demo-app:1.0.0
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          resources:
+            requests:
+              memory: "180Mi"
+              cpu: "10m"
+          env:
+            - name: MONGO_INITDB_DATABASE
+              value: mydatabase
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: secret
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-app
+spec:
+  ports:
+    - name: http-8081
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: demo-app
