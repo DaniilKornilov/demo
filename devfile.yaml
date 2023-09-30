@@ -24,21 +24,28 @@ components:
         uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: kubernetes-deploy
+  - name: kubernetes-deploy-demo
     kubernetes:
-      uri: deploy.yaml
+      uri: kube/demo.yaml
+  - name: kubernetes-deploy-mongo
+    kubernetes:
+      uri: kube/mongo.yaml
 commands:
   - id: build-image
     apply:
       component: image-build
-  - id: deploy-kubernetes
+  - id: deploy-demo
     apply:
-      component: kubernetes-deploy
+      component: kubernetes-deploy-demo
+  - id: deploy-mongo
+    apply:
+      component: kubernetes-deploy-mongo
   - id: deploy
     composite:
       commands:
         - build-image
-        - deploy-kubernetes
+        - deploy-mongo
+        - deploy-demo
       group:
         kind: deploy
         isDefault: true
