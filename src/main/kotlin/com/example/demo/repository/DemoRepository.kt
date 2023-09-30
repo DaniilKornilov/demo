@@ -1,4 +1,5 @@
 package com.example.demo.repository
 
-interface DemoRepository {
-}
+import org.springframework.data.mongodb.repository.MongoRepository
+
+interface DemoRepository : MongoRepository<DemoEntity, String>
