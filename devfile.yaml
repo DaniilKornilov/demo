@@ -2,29 +2,29 @@ schemaVersion: 2.2.0
 metadata:
   name: kotlin-mongo
 components:
-  - name: image-build
+  - name: image
     image:
       imageName: daniilkornilov/demo-app:1.0.0
       dockerfile:
         uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: kubernetes-deploy-demo
+  - name: demo
     kubernetes:
       uri: kube/demo.yaml
-  - name: kubernetes-deploy-mongo
+  - name: mongo
     kubernetes:
       uri: kube/mongo.yaml
 commands:
   - id: build-image
     apply:
-      component: image-build
+      component: image
   - id: deploy-demo
     apply:
-      component: kubernetes-deploy-demo
+      component: demo
   - id: deploy-mongo
     apply:
-      component: kubernetes-deploy-mongo
+      component: mongo
   - id: deploy
     composite:
       commands:
