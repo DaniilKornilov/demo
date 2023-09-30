@@ -24,46 +24,21 @@ components:
         uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: kubernetes-deploy-mongo
-    attributes:
-      deployment/replicas: 1
-      deployment/cpuRequest: 10m
-      deployment/memoryRequest: 500Mi
-      deployment/container-port: 27017
+  - name: kubernetes-deploy
     kubernetes:
-      uri: mongo.yaml
-      endpoints:
-        - name: mongo
-          targetPort: 27017
-          path: /
-  - name: kubernetes-deploy-app
-    attributes:
-      deployment/replicas: 1
-      deployment/cpuRequest: 10m
-      deployment/memoryRequest: 180Mi
-      deployment/container-port: 8081
-    kubernetes:
-      uri: app.yaml
-      endpoints:
-        - name: app
-          targetPort: 8081
-          path: /
+      uri: deploy.yaml
 commands:
   - id: build-image
     apply:
       component: image-build
-  - id: deploy-mongo
+  - id: deploy-kubernetes
     apply:
-      component: kubernetes-deploy-mongo
-  - id: deploy-app
-    apply:
-      component: kubernetes-deploy-app
+      component: kubernetes-deploy
   - id: deploy
     composite:
       commands:
         - build-image
-        - deploy-mongo
-        - deploy-app
+        - deploy-kubernetes
       group:
         kind: deploy
         isDefault: true
