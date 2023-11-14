@@ -1,14 +1,14 @@
 schemaVersion: 2.2.0
 metadata:
-  name: bda
+  name: kotlin-mongo
   version: 1.2.1
   attributes:
     alpha.dockerimage-port: 8081
   displayName: Spring Boot®
-  description: Spring Boot® using Gradle
+  description: Spring Boot® using Maven
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   tags:
-    - Java
+    - Kotlin
     - Spring
   projectType: springboot
   language: Kotlin
@@ -20,30 +20,37 @@ parent:
 components:
   - name: image
     image:
-      imageName: kmore23/poly_cloud_curse:latest
+      imageName: daniilkornilov/demo-app:1.0.0
       dockerfile:
-        uri: docker-bda/Dockerfile
+        uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: bda
+  - name: demo
     kubernetes:
-      uri: kube/bda.yaml
+      uri: kube/demo.yaml
       endpoints:
         - name: http-8081
           targetPort: 8081
           path: /
+  - name: mongo
+    kubernetes:
+      uri: kube/mongo.yaml
 commands:
   - id: build-image
     apply:
       component: image
-  - id: deploy-bda
+  - id: deploy-demo
     apply:
-      component: bda
+      component: demo
+  - id: deploy-mongo
+    apply:
+      component: mongo
   - id: deploy
     composite:
       commands:
         - build-image
-        - deploy-bda
+        - deploy-demo
+        - deploy-mongo
       group:
         kind: deploy
         isDefault: true
