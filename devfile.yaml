@@ -25,21 +25,21 @@ components:
         uri: docker/Dockerfile
         buildContext: .
         rootRequired: false
-  - name: els
+  - name: demo
     kubernetes:
-      uri: kube/els.yaml
+      uri: kube/demo.yaml
 commands:
   - id: build-image
     apply:
       component: image
-  - id: deploy-els
+  - id: deploy-demo
     apply:
-      component: els
+      component: demo
   - id: deploy
     composite:
       commands:
         - build-image
-        - deploy-els
+        - deploy-demo
       group:
         kind: deploy
         isDefault: true
