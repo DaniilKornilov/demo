@@ -31,27 +31,5 @@ spec:
             - containerPort: 8081
           env:
             - name: MONGO_URL
-              value: mongodb://localhost:27017/dev
+              value: mongodb://mongo:27017/dev
           imagePullPolicy: Always
-        - name: mongo
-          image: mongo
-          ports:
-            - containerPort: 27017
-          volumeMounts:
-            - name: storage
-              mountPath: /data/db
-      volumes:
-        - name: storage
-          persistentVolumeClaim:
-            claimName: mongo-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 256Mi
