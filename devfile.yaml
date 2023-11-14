@@ -22,7 +22,7 @@ components:
     image:
       imageName: kmore23/poly_cloud_curse:latest
       dockerfile:
-        uri: docker/Dockerfile
+        uri: docker-bda/Dockerfile
         buildContext: .
         rootRequired: false
   - name: bda
